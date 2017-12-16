@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.robotcontroller.external;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -41,8 +41,11 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-@Autonomous(name="auto_red1_v2Gabe", group= "Autonomous")
-public class auto_red1_v2Gabe extends LinearOpMode {
+@Autonomous(name="FIXEDAuto_red1", group= "Autonomous")
+public class FIXEDAuto_red1 extends LinearOpMode {
+
+    public int leftTarget=0;
+    public int rightTarget=0;
 
     // motor controllers
     DcMotorController driveController;
@@ -65,15 +68,15 @@ public class auto_red1_v2Gabe extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
     //set encoder stuff
-    static final double     COUNTS_PER_WHEEL_REV_R    = 23 ;
-    static final double     COUNTS_PER_WHEEL_REV_L    = 23 ;// our motor dist
+    static final double     COUNTS_PER_WHEEL_REV_R    = 20 ;
+    static final double     COUNTS_PER_WHEEL_REV_L    = 17 ;// our motor dist
     static final double     WHEEL_DIAMETER_INCHES   = 4 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH_R         = (COUNTS_PER_WHEEL_REV_R)/
             (WHEEL_DIAMETER_INCHES * Math.PI);
     static final double     COUNTS_PER_INCH_L        = (COUNTS_PER_WHEEL_REV_L)/
             (WHEEL_DIAMETER_INCHES * Math.PI);
-    static final double     DRIVE_SPEED             = 0.5;
-    static final double     TURN_SPEED              = 0.4;
+    static final double     DRIVE_SPEED             = 0.6;
+    static final double     TURN_SPEED              = 1;
 
     int balanceDist=14; //the distance required to get off of the balance stone
 
@@ -136,19 +139,20 @@ public class auto_red1_v2Gabe extends LinearOpMode {
 
         */
 
-        /*lift the block a bit
+        //lift the block a bit
         motorLift.setPower(-0.5);
         sleep(800);
         motorLift.setPower(0);
-*/
-        encoderDrive(DRIVE_SPEED, 12, 12, 10, 0);
-        encoderDrive(TURN_SPEED, 7, -7, 10, 0);//drive off platform
 
-        motorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        encoderDrive(DRIVE_SPEED, 22,22,10.0,0); //drive off platform
 
-        // dropBlock(); //drop the block
+        encoderDrive(TURN_SPEED, -6,6,10.0,0); //drive off platform
 
+        encoderDrive(DRIVE_SPEED, 16,16,3.0,0);
+
+        dropBlock(); //drop the block
+
+        encoderDrive(DRIVE_SPEED,-8,-8,3.0,0);
 
         /*
 
@@ -163,16 +167,24 @@ public class auto_red1_v2Gabe extends LinearOpMode {
     }
 
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS, double wait){
-        int leftTarget;
-        int rightTarget;
-        double leftMod = 0.92;
+
+        double leftMod = 1.0;
         double rightMod = 1.0;
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
+            //reset encoders
+            motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            //run encoders
+            motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
             // Determine new target position, and pass to motor controller
-            leftTarget = motorLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH_L);
-            rightTarget = motorRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH_R);
+            leftTarget = (int)(leftInches * COUNTS_PER_INCH_L);
+            rightTarget = (int)(rightInches * COUNTS_PER_INCH_R);
 
             leftTarget = (int)(leftTarget*leftMod);
             rightTarget = (int)(rightTarget*rightMod);
@@ -222,13 +234,17 @@ public class auto_red1_v2Gabe extends LinearOpMode {
     public void dropBlock(){
         //lower the block down a bit
         motorLift.setPower(0.5);
-        //sleep(500);
+        sleep(500);
         motorLift.setPower(0);
-        //sleep(500);
+        sleep(500);
         //let go of the block
         topRight.setPosition(0.7);
         topLeft.setPosition(0.2);
         bottomRight.setPosition(0.2);
         bottomLeft.setPosition(0.7);
+        motorLift.setPower(-0.5);
+        sleep(500);
+        motorLift.setPower(0);
+        sleep(500);
     }
 }
