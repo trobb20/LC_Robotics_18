@@ -161,10 +161,10 @@ public class Knockoff_Red extends LinearOpMode {
         telemetry.addData("BLUE: ", colorSensor.blue());
 
         if((colorSensor.red()<=redThreshold)&&(colorSensor.blue()>=blueThreshold)){
-            colorKnock.setPosition(right);
+            colorKnock.setPosition(left);
         }
         else if((colorSensor.red()>=redThreshold)&&(colorSensor.blue()<=blueThreshold)){
-            colorKnock.setPosition(left);
+            colorKnock.setPosition(right);
         }
 
         sleep(250);
