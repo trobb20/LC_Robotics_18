@@ -154,6 +154,9 @@ public class SensorMRColorSamTest extends LinearOpMode {
                 }
 
             }
+
+            stop();
+
         }
 
         public void hitLeft() {
