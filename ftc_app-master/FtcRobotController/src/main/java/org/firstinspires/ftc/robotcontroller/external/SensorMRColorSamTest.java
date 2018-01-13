@@ -114,12 +114,12 @@ public class SensorMRColorSamTest extends LinearOpMode {
       Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
 
       // send the info back to driver station using telemetry function.
-      /*if(colorSensor.red()>colorSensor.blue()){
+      if(colorSensor.red()>colorSensor.blue()){
         telemetry.addLine("Red");
       }
       if(colorSensor.blue()>colorSensor.red()){
         telemetry.addLine("Blue");
-      }*/
+      }
       // change the background color to match the color detected by the RGB sensor.
       // pass a reference to the hue, saturation, and value array as an argument
       // to the HSVToColor method.
@@ -140,7 +140,7 @@ public class SensorMRColorSamTest extends LinearOpMode {
                 telemetry.addData("Red:", red);
                 telemetry.update();
 
-               /* if (red >= 15) {
+               if (red >= 15) {
 
                     hitLeft();
                     hit=1;
@@ -151,7 +151,7 @@ public class SensorMRColorSamTest extends LinearOpMode {
                     hitRight();
                     hit=1;
 
-                }*/
+                }
 
             }
         }
