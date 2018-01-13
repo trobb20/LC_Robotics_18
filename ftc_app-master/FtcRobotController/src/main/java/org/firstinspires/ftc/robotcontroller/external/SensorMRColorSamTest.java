@@ -72,7 +72,9 @@ public class SensorMRColorSamTest extends LinearOpMode {
       //sensors
       colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
+      //set servos to initial positions
       armServo1.setPosition(0.75);
+      armServo2.setPosition(0.5);
 
     // hsvValues is an array that will hold the hue, saturation, and value information.
     float hsvValues[] = {0F,0F,0F};
@@ -131,6 +133,7 @@ public class SensorMRColorSamTest extends LinearOpMode {
 
             armServo1.setPosition(0.1);
 
+
             while (hit == 0) {
 
                 double blue = colorSensor.blue();
@@ -140,13 +143,13 @@ public class SensorMRColorSamTest extends LinearOpMode {
                 telemetry.addData("Red:", red);
                 telemetry.update();
 
-               if (red >= 15) {
+               if (red >= 5) {
 
                     hitLeft();
                     hit=1;
 
                 }
-                if (blue >= 15) {
+                if (blue >= 5) {
 
                     hitRight();
                     hit=1;
@@ -155,7 +158,7 @@ public class SensorMRColorSamTest extends LinearOpMode {
 
             }
 
-            stop();
+
 
         }
 
@@ -163,7 +166,10 @@ public class SensorMRColorSamTest extends LinearOpMode {
 
             armServo2.setPosition(0);
             sleep(3000);
+            //set servos to initial positions
+            armServo1.setPosition(0.75);
             armServo2.setPosition(0.5);
+            stop();
 
         }
 
@@ -171,7 +177,10 @@ public class SensorMRColorSamTest extends LinearOpMode {
 
             armServo2.setPosition(1);
             sleep(3000);
+            //set servos to initial positions
+            armServo1.setPosition(0.75);
             armServo2.setPosition(0.5);
+            stop();
         }
 
       });
