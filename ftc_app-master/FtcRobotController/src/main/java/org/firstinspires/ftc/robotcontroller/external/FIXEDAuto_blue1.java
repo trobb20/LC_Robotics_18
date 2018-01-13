@@ -174,7 +174,7 @@ public class FIXEDAuto_blue1 extends LinearOpMode {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
-            //reset encoders
+            //reset encoders2
             motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
