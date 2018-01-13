@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -41,7 +42,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-@Autonomous(name="auto_red2", group= "Autonomous")
+//@Autonomous(name="auto_red2", group= "Autonomous")
 public class auto_red2 extends LinearOpMode {
 
     // motor controllers
@@ -61,6 +62,11 @@ public class auto_red2 extends LinearOpMode {
     Servo topLeft;
     Servo bottomRight;
     Servo bottomLeft;
+
+    //sensors
+    DeviceInterfaceModule interfaceModule;
+    ColorSensor colorSensor;
+
 
     private ElapsedTime     runtime = new ElapsedTime();
 
@@ -96,7 +102,10 @@ public class auto_red2 extends LinearOpMode {
         topLeft = hardwareMap.servo.get("topLeft");
         bottomRight = hardwareMap.servo.get("bottomRight");
         bottomLeft = hardwareMap.servo.get("bottomLeft");
+
+        interfaceModule = hardwareMap.deviceInterfaceModule.get("interfaceModule");
         //sensors
+        colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
         //Set all powers to 0
         motorRight.setPower(0);

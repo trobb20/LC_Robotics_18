@@ -60,6 +60,8 @@ public class LcTeleOp18 extends OpMode {
     Servo topLeft;
     Servo bottomRight;
     Servo bottomLeft;
+    Servo armServo1;
+    Servo armServo2;
 
 
     // motors
@@ -108,6 +110,8 @@ public class LcTeleOp18 extends OpMode {
         topLeft = hardwareMap.servo.get("topLeft");
         bottomRight = hardwareMap.servo.get("bottomRight");
         bottomLeft = hardwareMap.servo.get("bottomLeft");
+        armServo1 = hardwareMap.servo.get("armServo1");
+        armServo2 = hardwareMap.servo.get("armServo2");
         //sensors
 
         //Set all powers to 0
@@ -120,6 +124,8 @@ public class LcTeleOp18 extends OpMode {
         topLeft.setPosition(0.2);
         bottomRight.setPosition(0.2);
         bottomLeft.setPosition(0.7);
+        armServo1.setPosition(0.5);
+        armServo2.setPosition(0.5);
     }
 
     /*
@@ -191,6 +197,30 @@ public class LcTeleOp18 extends OpMode {
             motorLift.setPower(0);
         }
 
+    //ARM
+
+        if (gamepad1.left_bumper) {
+            armServo1.setPosition(0);
+        }
+
+        if (gamepad1.right_bumper) {
+            armServo1.setPosition(1);
+        }
+
+        if (gamepad1.left_trigger>0) {
+            armServo2.setPosition(0);
+        }
+
+        if (gamepad1.right_trigger>0) {
+            armServo2.setPosition(1);
+        }
+
+        if (gamepad1.dpad_up) {
+            armServo2.setPosition(0.5);
+        }
+
+        float servo1 = gamepad2.left_stick_x;
+        armServo1.setPosition(Range.clip(servo1, 0, 1));
 
     //CLAW
 
@@ -244,6 +274,7 @@ public class LcTeleOp18 extends OpMode {
         telemetry.addData("left tgt pwr", "pwr: " + "%.2f", left);
         telemetry.addData("right tgt pwr", "pwr: " + "%.2f", right);
         telemetry.addData("arm vertical", "pwr: "+ "%.2f", motorLift.getPower());
+        telemetry.addData("Arm Servo1", "armServo1: "+ "%.2f", servo1);
         telemetry.update();
     }
 
