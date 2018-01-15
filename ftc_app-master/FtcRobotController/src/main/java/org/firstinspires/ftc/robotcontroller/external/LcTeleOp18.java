@@ -116,10 +116,10 @@ public class LcTeleOp18 extends OpMode {
         motorLift.setPower(0);
 
         //servo init
-        topRight.setPosition(0.7);
-        topLeft.setPosition(0.2);
-        bottomRight.setPosition(0.2);
-        bottomLeft.setPosition(0.7);
+        topRight.setPosition(0);
+        topLeft.setPosition(1);
+        bottomRight.setPosition(1);
+        bottomLeft.setPosition(0);
     }
 
     /*
@@ -196,20 +196,34 @@ public class LcTeleOp18 extends OpMode {
 
       // right bumper opens claw, left closes it.
 
+        double openVal = 0.4;
+
         if (gamepad2.right_bumper) {
-            topRight.setPosition(0.7);
-            topLeft.setPosition(0.2);
-            bottomRight.setPosition(0.2);
-            bottomLeft.setPosition(0.7);
+            topRight.setPosition(0+openVal);
+            topLeft.setPosition(1-openVal);
+            bottomRight.setPosition(1-openVal);
+            bottomLeft.setPosition(0+openVal);
 
         }
+
+        double closeVal = 0.1;
+
         if (gamepad2.left_bumper) {
-            topRight.setPosition(1);
-            topLeft.setPosition(0);
-            bottomRight.setPosition(0);
-            bottomLeft.setPosition(1);
+            topRight.setPosition(0+closeVal);
+            topLeft.setPosition(1-closeVal);
+            bottomRight.setPosition(1-closeVal);
+            bottomLeft.setPosition(0+closeVal);
 
         }
+
+        //push blocks in (fully closed)
+        if (gamepad2.dpad_up){
+            topRight.setPosition(0);
+            topLeft.setPosition(1);
+            bottomRight.setPosition(1);
+            bottomLeft.setPosition(0);
+        }
+
     //convert slowModeType to displaySlowModeType
         switch (slowModeType){
             case 1:
