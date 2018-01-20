@@ -43,8 +43,8 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-@TeleOp(name="LcTeleOp18", group= "TeleOp")
-public class LcTeleOp18 extends OpMode {
+@TeleOp(name="Armcontrol", group= "TeleOp")
+public class LcTeleOp18_armcontrol extends OpMode {
 
 
 
@@ -60,6 +60,7 @@ public class LcTeleOp18 extends OpMode {
     Servo topLeft;
     Servo bottomRight;
     Servo bottomLeft;
+    Servo armServo1;
 
 
     // motors
@@ -104,6 +105,7 @@ public class LcTeleOp18 extends OpMode {
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorLift = hardwareMap.dcMotor.get("motorLift");
         //servos
+        armServo1 = hardwareMap.servo.get("armServo1");
         topRight = hardwareMap.servo.get("topRight");
         topLeft = hardwareMap.servo.get("topLeft");
         bottomRight = hardwareMap.servo.get("bottomRight");
@@ -223,6 +225,15 @@ public class LcTeleOp18 extends OpMode {
             bottomRight.setPosition(1);
             bottomLeft.setPosition(0);
         }
+
+
+        if(gamepad2.dpad_left){
+            armServo1.setPosition(0);
+        }
+        if(gamepad2.dpad_right){
+            armServo1.setPosition(1);
+        }
+
 
 
     //convert slowModeType to displaySlowModeType
