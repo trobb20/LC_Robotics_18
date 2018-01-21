@@ -120,6 +120,8 @@ public class LcTeleOp18 extends OpMode {
         topLeft.setPosition(1);
         bottomRight.setPosition(1);
         bottomLeft.setPosition(0);
+
+
     }
 
     /*
@@ -178,19 +180,14 @@ public class LcTeleOp18 extends OpMode {
 
     //LIFT
 
-      //up is left trigger down is right trigger
-        if(gamepad2.right_trigger>0){
-            double vert=gamepad2.right_trigger; //if right trigger is pressed down, set the vert value to go down
+      //
+        if(gamepad2.left_stick_y>0 || gamepad2.left_stick_y<0){
+            double vert=gamepad2.left_stick_y; // arm is left stick
             motorLift.setPower(vert);
         }
-        if(gamepad2.left_trigger>0){
-            double vert=-gamepad2.left_trigger; // if the left trigger is pressed down, set vert value to go up (negative)
-            motorLift.setPower(vert);
-        }
-        else if(gamepad2.left_trigger==0 && gamepad2.right_trigger==0){
+        else if(gamepad2.left_stick_y==0){
             motorLift.setPower(0);
         }
-
 
     //CLAW
 
@@ -198,7 +195,7 @@ public class LcTeleOp18 extends OpMode {
 
         double openVal = 0.4;
 
-        if (gamepad2.right_bumper) {
+        if (gamepad2.left_bumper) {
             topRight.setPosition(0+openVal);
             topLeft.setPosition(1-openVal);
             bottomRight.setPosition(1-openVal);
@@ -206,18 +203,8 @@ public class LcTeleOp18 extends OpMode {
 
         }
 
-        double closeVal = 0.1;
-
-        if (gamepad2.left_bumper) {
-            topRight.setPosition(0+closeVal);
-            topLeft.setPosition(1-closeVal);
-            bottomRight.setPosition(1-closeVal);
-            bottomLeft.setPosition(0+closeVal);
-
-        }
-
         //push blocks in (fully closed)
-        if (gamepad2.dpad_up){
+        if (gamepad2.right_bumper){
             topRight.setPosition(0);
             topLeft.setPosition(1);
             bottomRight.setPosition(1);
