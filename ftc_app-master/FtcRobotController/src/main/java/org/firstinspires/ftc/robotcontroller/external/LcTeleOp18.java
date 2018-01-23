@@ -70,7 +70,7 @@ public class LcTeleOp18 extends OpMode {
     // slow mode settings
     int slowModeType = 4;
     String displaySlowModeType = "Quarter Speed";
-    double leftMod = 0.92;
+    double leftMod = 1.0;
     double rightMod = 1.0;
 
     /**
