@@ -64,7 +64,7 @@ public class red1_no_encoder extends LinearOpMode {
 
     private ElapsedTime     runtime = new ElapsedTime();
 
-    //set encoder stuff	
+    //set encoder stuff
     static final double     WHEEL_DIAMETER_INCHES   = 4 ;     // For figuring circumference
 	static final double		REVOLUTIONS_R			= 1	;		//how many revolutions of the wheels can you make in one second at speed 1
 	static final double		REVOLUTIONS_L			= 1	;	//^
@@ -125,15 +125,15 @@ public class red1_no_encoder extends LinearOpMode {
         motorLift.setPower(-0.5);
         sleep(800);
         motorLift.setPower(0);
-		
+
 		timeDrive(DRIVE_SPEED,22,22,0.5); //drive off platform
-		
+
 		timeDrive(TURN_SPEED, -6,6,0.5); //turn towards goal
-		
+
 		timeDrive(DRIVE_SPEED, 16,16,0.5); //drive towards goal
-		
+
 		dropBlock();
-		
+
 		timeDrive(DRIVE_SPEED, -8,-8,0.5); // pull back from goal.
 
 
@@ -148,45 +148,43 @@ public class red1_no_encoder extends LinearOpMode {
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-	
+
 	public void timeDrive(double speed, double leftInches, double rightInches, double wait){
 		if (opModeIsActive()){
-			
+
 			double ratio = DIST_PER_SEC_L/DIST_PER_SEC_R; //ratio between their rates
-			
-			double speedL = speed*(leftInches/abs(leftInches));//this gives us direction 
+
+			double speedL = speed*(leftInches/abs(leftInches));//this gives us direction
 			double speedR = speed*ratio*(rightInches/abs(rightInches));//make sure we scale the speeds so they take the same amount of time to go the same distance
-			
+
 			double rateL = abs(DIST_PER_SEC_L*speedL);
 			/*
 			double rateR = DIST_PER_SEC_R*speedR
-			
+
 			double timeL = leftInches/rateL
 			double timeR = rightInches/rateR
 			*/
 			double time= abs(leftInches/rateL);
-			
+
 			telemetry.addData("Path1",  "Calculations Done. SPEED L:D %7d :%7d", speedL,  speedR);
             telemetry.addData("Path2",  "Runtime will be %7d",time);
             telemetry.update();
-			
-			sleep(2000); //sleep two seconds so drivers can see the telemetry
-			
+
 			//start driving
 			runtime.reset();
 			motorLeft.setPower(speedL);
 			motorRight.setPower(speedR);
-			
+
 			while (opModeIsActive() && runtime.seconds()<time){
 				remaining = runtime.seconds()-time;				//display the time remaining while the bot drives
 				telemetry.addData("Path2",  "Time remaining: %7d",remaining);
 				telemetry.update();
 			}
-			
+
 			// Stop all motion;
             motorLeft.setPower(0);
             motorRight.setPower(0);
-			
+
 			sleep((long)wait*1000); //sleep before next move
 		}
 	}
