@@ -154,17 +154,17 @@ public class red1_no_encoder extends LinearOpMode {
 
 			double ratio = DIST_PER_SEC_L/DIST_PER_SEC_R; //ratio between their rates
 
-			double speedL = speed*(leftInches/abs(leftInches));//this gives us direction
-			double speedR = speed*ratio*(rightInches/abs(rightInches));//make sure we scale the speeds so they take the same amount of time to go the same distance
+			double speedL = speed*(leftInches/Math.abs(leftInches));//this gives us direction
+			double speedR = speed*ratio*(rightInches/Math.abs(rightInches));//make sure we scale the speeds so they take the same amount of time to go the same distance
 
-			double rateL = abs(DIST_PER_SEC_L*speedL);
+			double rateL = Math.abs(DIST_PER_SEC_L*speedL);
 			/*
 			double rateR = DIST_PER_SEC_R*speedR
 
 			double timeL = leftInches/rateL
 			double timeR = rightInches/rateR
 			*/
-			double time= abs(leftInches/rateL);
+			double time= Math.abs(leftInches/rateL);
 
 			telemetry.addData("Path1",  "Calculations Done. SPEED L:D %7d :%7d", speedL,  speedR);
             telemetry.addData("Path2",  "Runtime will be %7d",time);
@@ -176,7 +176,7 @@ public class red1_no_encoder extends LinearOpMode {
 			motorRight.setPower(speedR);
 
 			while (opModeIsActive() && runtime.seconds()<time){
-				remaining = runtime.seconds()-time;				//display the time remaining while the bot drives
+				double remaining = runtime.seconds()-time;				//display the time remaining while the bot drives
 				telemetry.addData("Path2",  "Time remaining: %7d",remaining);
 				telemetry.update();
 			}
