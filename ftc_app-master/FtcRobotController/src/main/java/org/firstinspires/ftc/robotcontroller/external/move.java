@@ -41,8 +41,8 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-@Autonomous(name="red1_no_encoder", group= "Autonomous")
-public class red1_no_encoder extends LinearOpMode {
+@Autonomous(name="move", group= "Autonomous")
+public class move extends LinearOpMode {
 
     // motor controllers
     DcMotorController driveController;
@@ -64,15 +64,6 @@ public class red1_no_encoder extends LinearOpMode {
 
     private ElapsedTime     runtime = new ElapsedTime();
 
-    //set encoder stuff
-    static final double     WHEEL_DIAMETER_INCHES   = 4 ;     // For figuring circumference
-	static final double		REVOLUTIONS_R			= 2.33;		//how many revolutions of the wheels can you make in one second at speed 1
-	static final double		REVOLUTIONS_L			= 2.28;	//^
-	static final double		DIST_PER_SEC_R			= WHEEL_DIAMETER_INCHES*3.14*REVOLUTIONS_R;	//how many inches the wheels turn in one second at speed 1
-	static final double		DIST_PER_SEC_L			= WHEEL_DIAMETER_INCHES*3.14*REVOLUTIONS_L;	//^
-    static final double     DRIVE_SPEED             = 0.5;
-    static final double     TURN_SPEED              = 0.5;
-	double openVal = 0.4;
 
     @Override
 
@@ -113,98 +104,11 @@ public class red1_no_encoder extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        /*
+        runtime.reset();
 
-        ====================================================================
-                                DRIVING COMMANDS
-        ====================================================================
-
-        */
-
-        //lift the block a bit
-        motorLift.setPower(-0.5);
-        sleep(800);
-        motorLift.setPower(0);
-
-		timeDrive(DRIVE_SPEED,13,13,0.5); //drive off platform
-
-		timeDrive(TURN_SPEED, -3,3,0.5); //turn towards goal
-
-		timeDrive(DRIVE_SPEED, 6,6,0.5); //drive towards goal
-
-		dropBlock();
-
-		timeDrive(DRIVE_SPEED, -4,-4,0.5); // pull back from goal.
-
-
-        /*
-
-        ====================================================================
-                                         END
-        ====================================================================
-
-        */
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-    }
-
-	public void timeDrive(double speed, double leftInches, double rightInches, double wait){
-		if (opModeIsActive()){
-
-			double ratio = DIST_PER_SEC_L/DIST_PER_SEC_R; //ratio between their rates
-
-			double speedL = speed*(leftInches/Math.abs(leftInches));//this gives us direction
-			double speedR = speed*ratio*(rightInches/Math.abs(rightInches));//make sure we scale the speeds so they take the same amount of time to go the same distance
-
-			double rateL = Math.abs(DIST_PER_SEC_L*speedL);
-			/*
-			double rateR = DIST_PER_SEC_R*speedR
-
-			double timeL = leftInches/rateL
-			double timeR = rightInches/rateR
-			*/
-			double time= Math.abs(leftInches/rateL);
-
-			telemetry.addData("Path1",  "Calculations Done. SPEED L:D ", speedL, speedR);
-            telemetry.addData("Path2",  "Runtime will be ",time);
-            telemetry.update();
-
-			//start driving
-			runtime.reset();
-			motorLeft.setPower(speedL);
-			motorRight.setPower(speedR);
-
-			while (opModeIsActive() && runtime.seconds()<time){
-				double remaining = runtime.seconds()-time;				//display the time remaining while the bot drives
-				telemetry.addData("Path2",  "Time remaining: ",remaining);
-				telemetry.update();
-			}
-
-			// Stop all motion;
-            motorLeft.setPower(0);
-            motorRight.setPower(0);
-
-			sleep((long)wait*1000); //sleep before next move
-		}
-	}
-
-
-    public void dropBlock(){
-        //lower the block down a bit
-        motorLift.setPower(0.5);
-        sleep(500);
-        motorLift.setPower(0);
-        sleep(500);
-        //let go of the block
-		topRight.setPosition(0+openVal);
-        topLeft.setPosition(1-openVal);
-        bottomRight.setPosition(1-openVal);
-        bottomLeft.setPosition(0+openVal);
-		//lift the arm back up
-        motorLift.setPower(-0.5);
-        sleep(500);
-        motorLift.setPower(0);
-        sleep(500);
+        while(runtime.seconds()<1) {
+            motorRight.setPower(1);
+            motorLeft.setPower(1);
+        }
     }
 }
